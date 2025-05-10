@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectHub | Conexão entre Talentos, Mentores e Empresas</title>
+    <style>
+        /* Reset e Estilos Base */
+        :root {
+            --azul-primario: #2a5bd7;
+            --azul-secundario: #3a7bff;
+            --roxo: #7a4dbb;
+            --lilas: #9d7ad2;
+            --branco: #ffffff;
+            --cinza-claro: #f5f7fa;
+            --cinza-medio: #e1e5eb;
+            --cinza-escuro: #6c757d;
+            --preto: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--preto);
+            background-color: var(--cinza-claro);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--azul-primario);
+            color: var(--branco);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--azul-secundario);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42, 91, 215, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--roxo);
+            color: var(--branco);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--lilas);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(122, 77, 187, 0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--azul-primario);
+            color: var(--azul-primario);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--azul-primario);
+            color: var(--branco);
+        }
+        
+        /* Header e Navegação */
+        header {
+            background-color: var(--branco);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--azul-primario);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--roxo);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            color: var(--preto);
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--azul-primario);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--azul-primario);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, var(--cinza-claro) 0%, var(--branco) 100%);
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            color: var(--preto);
+        }
+        
+        .hero h1 span {
+            color: var(--azul-primario);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--cinza-escuro);
+            margin-bottom: 30px;
+            max-width: 90%;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--azul-primario);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--cinza-escuro);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--branco);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--preto);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: var(--cinza-escuro);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--cinza-claro);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-icon i {
+            font-size: 32px;
+            color: var(--azul-primario);
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--preto);
+        }
+        
+        .feature-card p {
+            color: var(--cinza-escuro);
+            font-size: 16px;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 100px 0;
+            background-color: var(--cinza-claro);
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            background-color: var(--branco);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--roxo);
+            color: var(--branco);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--preto);
+        }
+        
+        .step p {
+            color: var(--cinza-escuro);
+            font-size: 16px;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--cinza-medio);
+            z-index: 0;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--branco);
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .testimonial {
+            background-color: var(--cinza-claro);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid var(--branco);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-text {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--preto);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--azul-primario);
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-role {
+            font-size: 14px;
+            color: var(--cinza-escuro);
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--azul-primario) 0%, var(--roxo) 100%);
+            color: var(--branco);
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .cta .btn-outline {
+            border-color: var(--branco);
+            color: var(--branco);
+        }
+        
+        .cta .btn-outline:hover {
+            background-color: var(--branco);
+            color: var(--azul-primario);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--preto);
+            color: var(--branco);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--branco);
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-logo span {
+            color: var(--lilas);
+        }
+        
+        .footer-about p {
+            color: var(--cinza-medio);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        
+        .social-link:hover {
+            background-color: var(--azul-primario);
+        }
+        
+        .footer-links h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--branco);
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--cinza-medio);
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--branco);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--cinza-medio);
+        }
+        
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--azul-primario);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--cinza-medio);
+            font-size: 14px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero p {
+                max-width: 100%;
+            }
+            
+            .hero-buttons, .stats {
+                justify-content: center;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .steps::before {
+                display: none;
+            }
+            
+            .step {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .section-title p {
+                font-size: 16px;
+            }
+            
+            .cta h2 {
+                font-size: 28px;
+            }
+            
+            .cta p {
+                font-size: 16px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Connect<span>Hub</span></a>
+                
+                <ul class="nav-links">
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#how-it-works">Como Funciona</a></li>
+                    <li><a href="#features">Benefícios</a></li>
+                    <li><a href="#testimonials">Depoimentos</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <a href="#" class="btn btn-outline">Login</a>
+                    <a href="#" class="btn btn-primary">Cadastre-se</a>
+                </div>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Conecte-se ao <span>futuro da sua carreira</span></h1>
+                    <p>A plataforma que une talentos promissores, mentores experientes e empresas inovadoras para criar oportunidades de crescimento profissional mutuamente benéficas.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">Sou Candidato</a>
+                        <a href="#" class="btn btn-secondary">Sou Mentor/Empresa</a>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number">5.000+</div>
+                            <div class="stat-label">Profissionais</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1.200+</div>
+                            <div class="stat-label">Mentores</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">300+</div>
+                            <div class="stat-label">Empresas</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Profissionais conectados">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Transforme sua jornada profissional</h2>
+                <p>Descubra como nossa plataforma pode acelerar seu desenvolvimento de carreira ou ajudar você a encontrar os talentos que sua empresa precisa.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Conexões Relevantes</h3>
+                    <p>Nosso algoritmo inteligente conecta você às pessoas e oportunidades mais alinhadas com seus objetivos.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Mentoria Personalizada</h3>
+                    <p>Acesso a mentores experientes que podem guiar seu desenvolvimento profissional de forma personalizada.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Oportunidades Exclusivas</h3>
+                    <p>Empresas parceiras compartilham vagas e projetos exclusivos diretamente com nossa comunidade.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Desenvolvimento Contínuo</h3>
+                    <p>Recursos e ferramentas para acompanhar seu progresso e identificar áreas de melhoria.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Comunidade Ativa</h3>
+                    <p>Participe de discussões, eventos e grupos com profissionais que compartilham seus interesses.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Segurança e Privacidade</h3>
+                    <p>Controle total sobre suas informações e quem pode acessá-las em nossa plataforma segura.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Como Funciona</h2>
+                <p>Três passos simples para começar a aproveitar todos os benefícios da nossa plataforma.</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Crie seu Perfil</h3>
+                    <p>Complete seu perfil com suas habilidades, experiências e objetivos profissionais. Quanto mais completo, melhor nosso sistema pode fazer conexões relevantes.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Encontre Conexões</h3>
+                    <p>Nosso algoritmo irá sugerir mentores, colegas ou oportunidades de trabalho baseado em seu perfil e objetivos.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Comece a Interagir</h3>
+                    <p>Agende sessões de mentoria, candidate-se a vagas ou participe de projetos colaborativos para desenvolver suas habilidades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>O que dizem sobre nós</h2>
+                <p>Histórias reais de profissionais que transformaram suas carreiras com nossa plataforma.</p>
+            </div>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Silva" class="testimonial-avatar">
+                    <p class="testimonial-text">"Graças ao ConnectHub encontrei um mentor que me ajudou a fazer a transição de carreira que eu tanto desejava. Em 6 meses já estava trabalhando na área dos meus sonhos!"</p>
+                    <div class="testimonial-author">Ana Silva</div>
+                    <div class="testimonial-role">Desenvolvedora Front-end na TechSolutions</div>
+                </div>
+                
+                <div class="testimonial" style="display:none;">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Mendes" class="testimonial-avatar">
+                    <p class="testimonial-text">"Como mentor, adoro poder compartilhar minha experiência e ver o crescimento dos profissionais que acompanho. A plataforma facilita todo o processo de conexão e acompanhamento."</p>
+                    <div class="testimonial-author">Carlos Mendes</div>
+                    <div class="testimonial-role">Diretor de Produto na InovaTech</div>
+                </div>
+                
+                <div class="testimonial" style="display:none;">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Juliana Costa" class="testimonial-avatar">
+                    <p class="testimonial-text">"Encontramos três dos nossos melhores colaboradores através do ConnectHub. O matching de habilidades com nossas necessidades foi perfeito."</p>
+                    <div class="testimonial-author">Juliana Costa</div>
+                    <div class="testimonial-role">RH na DigitalMind</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Pronto para transformar sua carreira?</h2>
+            <p>Junte-se a milhares de profissionais, mentores e empresas que já estão criando conexões valiosas em nossa plataforma.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Comece Agora</a>
+                <a href="#" class="btn btn-outline">Saiba Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <a href="#" class="footer-logo">Connect<span>Hub</span></a>
+                    <p>Conectando talentos, mentores e empresas para criar oportunidades de crescimento profissional mutuamente benéficas.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#">Página Inicial</a></li>
+                        <li><a href="#about">Sobre Nós</a></li>
+                        <li><a href="#how-it-works">Como Funciona</a></li>
+                        <li><a href="#features">Benefícios</a></li>
+                        <li><a href="#testimonials">Depoimentos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Para Candidatos</h3>
+                    <ul>
+                        <li><a href="#">Buscar Mentores</a></li>
+                        <li><a href="#">Encontrar Vagas</a></li>
+                        <li><a href="#">Recursos de Carreira</a></li>
+                        <li><a href="#">Planos e Preços</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Para Mentores/Empresas</h3>
+                    <ul>
+                        <li><a href="#">Torne-se um Mentor</a></li>
+                        <li><a href="#">Divulgue Vagas</a></li>
+                        <li><a href="#">Encontre Talentos</a></li>
+                        <li><a href="#">Soluções Corporativas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contato</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. Paulista, 1000 - São Paulo, SP</p>
+                    <p><i class="fas fa-phone"></i> (11) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> contato@connecthub.com.br</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ConnectHub. Todos os direitos reservados. | <a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        const navActions = document.querySelector('.nav-actions');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navActions.style.display = navActions.style.display === 'flex' ? 'none' : 'flex';
+            
+            // Change icon
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.style.display === 'flex') {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.style.display === 'flex') {
+                        navLinks.style.display = 'none';
+                        navActions.style.display = 'none';
+                        const icon = mobileMenuBtn.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                }
+            });
+        });
+        
+        // Simple testimonial slider
+        const testimonials = document.querySelectorAll('.testimonial');
+        let currentTestimonial = 0;
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => {
+                testimonial.style.display = 'none';
+            });
+            
+            testimonials[index].style.display = 'block';
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        // Show first testimonial
+        showTestimonial(0);
+        
+        // Auto-rotate testimonials every 5 seconds
+        setInterval(nextTestimonial, 5000);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+                navActions.style.display = 'flex';
+            } else {
+                navLinks.style.display = 'none';
+                navActions.style.display = 'none';
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    </script>
+</body>
+</html>
